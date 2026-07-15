@@ -28,7 +28,7 @@ export async function GET(req: NextRequest) {
     ]);
 
     // Attach comment counts and author names
-    const postIds = posts.map((p) => p._id.toString());
+    const postIds = posts.map((p) => (p._id as { toString(): string }).toString());
     const authorIds = [...new Set(posts.map((p) => p.authorId))];
 
     const userCol = await getUserCollection();
@@ -53,8 +53,8 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({
       data: posts.map((p) => ({
         ...p,
-        id: p._id.toString(),
-        commentCount: commentCountMap.get(p._id.toString()) ?? 0,
+        id: (p._id as { toString(): string }).toString(),
+        commentCount: commentCountMap.get((p._id as { toString(): string }).toString()) ?? 0,
         author: authorMap.get(p.authorId) ?? { name: "Unknown" },
       })),
       total,

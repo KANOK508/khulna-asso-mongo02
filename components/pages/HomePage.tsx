@@ -2,14 +2,14 @@
 
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion, type Variants } from "framer-motion";
 import { api } from "@/lib/api";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { MapPin, Users, Calendar, MessageSquare, Shield, ArrowRight, BookOpen, Globe, Award } from "lucide-react";
 
-const FADE_UP = { hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } } };
-const STAGGER = { visible: { transition: { staggerChildren: 0.1 } } };
+const FADE_UP: Variants = { hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } } };
+const STAGGER: Variants = { visible: { transition: { staggerChildren: 0.1 } } };
 
 interface Stats { totalMembers: number; totalEvents: number; totalForumPosts: number; }
 

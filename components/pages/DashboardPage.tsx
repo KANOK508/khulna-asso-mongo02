@@ -123,7 +123,15 @@ function DashboardContent() {
                 {loading ? <Skeleton className="h-64" /> : (
                   <ResponsiveContainer width="100%" height={220}>
                     <PieChart>
-                      <Pie data={stats?.byDistrict ?? []} dataKey="count" nameKey="district" cx="50%" cy="50%" outerRadius={80} label={({ district }) => district}>
+                      <Pie
+                        data={stats?.byDistrict ?? []}
+                        dataKey="count"
+                        nameKey="district"
+                        cx="50%"
+                        cy="50%"
+                        outerRadius={80}
+                        label={(props: unknown) => (props as { district?: string }).district}
+                      >
                         {(stats?.byDistrict ?? []).map((_, i) => (
                           <Cell key={i} fill={COLORS[i % COLORS.length]} />
                         ))}

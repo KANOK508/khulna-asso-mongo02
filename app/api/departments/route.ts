@@ -6,7 +6,12 @@ export async function GET() {
   try {
     await connectDB();
     const departments = await Department.find().sort({ name: 1 }).lean();
-    return NextResponse.json(departments.map((d) => ({ ...d, id: d._id.toString() })));
+    return NextResponse.json(
+      departments.map((d) => ({
+        ...d,
+        id: (d._id as { toString(): string }).toString(),
+      }))
+    );
   } catch (err) {
     console.error(err);
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });

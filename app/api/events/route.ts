@@ -27,19 +27,18 @@ export async function GET(req: NextRequest) {
     ]);
 
     // Attach attendee count to each event
-    const eventIds = events.map((e) => e._id.toString());
-    const attendeeCounts = await EventAttendee.aggregate([
-      { $match: { eventId: { $in: eventIds } } },
-      { $group: { _id: "$eventId", count: { $sum: 1 } } },
-    ]);
-    const countMap = new Map(attendeeCounts.map((a) => [a._id, a.count]));
+  const eventIds = events.map((e) => (e._id as { toString(): string }).toString());
+const attendeeCounts = await EventAttendee.aggregate([
+  { $match: { eventId: { $in: eventIds } } },
+  { $group: { _id: "$eventId", count: { $sum: 1 } } },
+]);
+const countMap = new Map(attendeeCounts.map((a) => [a._id, a.count]));
 
-    return NextResponse.json({
-      data: events.map((e) => ({
-        ...e,
-        id: e._id.toString(),
-        attendeeCount: countMap.get(e._id.toString()) ?? 0,
-      })),
+return NextResponse.json({
+  data: events.map((e) => {
+    const id = (e._id as { toString(): string }).toString();
+    return { ...e, id, attendeeCount: countMap.get(id) ?? 0 };
+  }),
       total,
       page,
       limit,
