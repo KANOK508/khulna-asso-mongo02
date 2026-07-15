@@ -1,0 +1,7 @@
+{
+  "name": "scripts",
+  "private": true,
+  "dependencies": {
+    "dotenv": "^16.4.7"
+  }
+}
